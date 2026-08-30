@@ -1,5 +1,5 @@
 /* ==========================================================
-   Password Barbarian — script.js
+   Password Barbarian : script.js
    Password strength engine + village animation controller
    + k-anonymous HIBP breach lookup + "Call the Builder" mutator
    ========================================================== */
@@ -32,7 +32,7 @@
   const buildings = buildingIds.map(id => document.getElementById(id));
 
   // ---------- Small dictionary for common-word / common-password detection ----------
-  // Not exhaustive — a lightweight heuristic list for real-time local feedback.
+  // Not exhaustive : a lightweight heuristic list for real-time local feedback.
   const COMMON_PASSWORDS = new Set([
     'password','123456','123456789','qwerty','abc123','password1','111111',
     'letmein','welcome','admin','iloveyou','monkey','dragon','football',
@@ -75,7 +75,7 @@
       `${len} characters and zero effort. Add more, please.`,
       `Blink and you've already typed this whole password.`,
       `This is a PIN pretending to be a password.`,
-      `${len} characters — even a snail could crack this faster than it moves.`,
+      `${len} characters : even a snail could crack this faster than it moves.`,
       `Short and weak. Just like that excuse you gave your teacher.`,
       `Too short. Hackers will crack this before your tea gets cold.`,
       `This password took less effort than a "k" text reply.`,
@@ -196,36 +196,36 @@
   ];
 
   const BANNER_WEAK = [
-    `Village Destroyed — 3 Stars. That was almost too easy.`,
-    `3 Stars to the Enemy — they didn't even need to try.`,
-    `Total Wipeout — 3 Stars. Even the Barbarian looked bored.`,
-    `Flattened — 3 Stars. Your village didn't stand a chance.`,
-    `3 Stars, No Effort — this password broke on contact.`,
-    `Village Gone — 3 Stars. That was over before it started.`,
-    `3 Stars — the enemy is already asking for a harder target.`,
-    `Wiped Out — 3 Stars. This one needs serious work.`,
+    `Village Destroyed : 3 Stars. That was almost too easy.`,
+    `3 Stars to the Enemy : they didn't even need to try.`,
+    `Total Wipeout : 3 Stars. Even the Barbarian looked bored.`,
+    `Flattened : 3 Stars. Your village didn't stand a chance.`,
+    `3 Stars, No Effort : this password broke on contact.`,
+    `Village Gone : 3 Stars. That was over before it started.`,
+    `3 Stars : the enemy is already asking for a harder target.`,
+    `Wiped Out : 3 Stars. This one needs serious work.`,
   ];
   const BANNER_MODERATE = [
-    `1 Star to the Enemy — could go either way.`,
-    `Partial Damage — 1 Star. Not terrible, not great either.`,
-    `1 Star — some walls held, some didn't.`,
-    `Half a Fight — 1 Star. Room to improve here.`,
-    `1 Star to the Enemy — decent, but not safe yet.`,
-    `Some Damage Taken — 1 Star. You're halfway there.`,
+    `1 Star to the Enemy : could go either way.`,
+    `Partial Damage : 1 Star. Not terrible, not great either.`,
+    `1 Star : some walls held, some didn't.`,
+    `Half a Fight : 1 Star. Room to improve here.`,
+    `1 Star to the Enemy : decent, but not safe yet.`,
+    `Some Damage Taken : 1 Star. You're halfway there.`,
   ];
   const BANNER_STRONG = [
-    `Attack Failed — 0 Stars. The enemy just gave up.`,
-    `0 Stars — the shield held, no damage at all.`,
-    `Attack Failed — 0 Stars. Nicely defended.`,
-    `0 Stars to the Enemy — this password isn't going down easy.`,
-    `Fully Defended — 0 Stars. Well built.`,
-    `0 Stars — even the Barbarian is impressed.`,
+    `Attack Failed : 0 Stars. The enemy just gave up.`,
+    `0 Stars : the shield held, no damage at all.`,
+    `Attack Failed : 0 Stars. Nicely defended.`,
+    `0 Stars to the Enemy : this password isn't going down easy.`,
+    `Fully Defended : 0 Stars. Well built.`,
+    `0 Stars : even the Barbarian is impressed.`,
   ];
   const BANNER_REPAIRED = [
-    `Rebuilt and Ready — try raiding this one now.`,
-    `Reinforced — this password just got a lot tougher.`,
-    `Fixed Up — stronger walls, same password underneath.`,
-    `Repairs Complete — go ahead, try to break this one.`,
+    `Rebuilt and Ready : try raiding this one now.`,
+    `Reinforced : this password just got a lot tougher.`,
+    `Fixed Up : stronger walls, same password underneath.`,
+    `Repairs Complete : go ahead, try to break this one.`,
   ];
 
   // ==========================================================
@@ -335,7 +335,7 @@
       issues.push(ROASTS.noDigits());
     }
     if (!hasUpper && !hasLower) {
-      // all numbers/symbols — unusual, skip specific message
+      // all numbers/symbols : unusual, skip specific message
     } else if (!hasUpper) {
       issues.push(ROASTS.allLowercase());
     } else if (!hasLower) {
@@ -443,7 +443,7 @@
   const TIER_META = {
     empty:    { label: 'Type something, Chief' },
     weak:     { label: 'Getting Clowned Right Now' },
-    moderate: { label: 'Meh Effort — Could Go Either Way' },
+    moderate: { label: 'Meh Effort : Could Go Either Way' },
     strong:   { label: 'Fort Knox Energy' },
   };
 
@@ -486,7 +486,7 @@
 
   function renderEta(analysis) {
     if (analysis.tier === 'empty') {
-      etaValue.textContent = '—';
+      etaValue.textContent = ':';
       etaValue.className = 'eta-value';
       etaSub.textContent = 'Type a password and watch the countdown to your downfall.';
       return;
@@ -646,7 +646,7 @@
 
     // Every call gets a fresh generation token and resets visuals
     // synchronously (inside resetVillage/play*), so a new tier always
-    // takes over immediately — even mid-animation — and any timeouts
+    // takes over immediately : even mid-animation : and any timeouts
     // still pending from whatever was playing before become no-ops.
     const gen = ++animGen;
 
@@ -710,7 +710,7 @@
         breachBody.innerHTML = `<div class="breach-result breached">${breachedLine}</div>`;
       } else {
         const cleanLine = pick([
-          `Good news — this exact password hasn't leaked before.`,
+          `Good news : this exact password hasn't leaked before.`,
           `Nobody's leaked this exact password yet. Good sign.`,
           `Clean so far. No leaks found for this one.`,
           `Not found in any known leak. That's a good start.`,
@@ -721,7 +721,7 @@
       if (pwInput.value !== password) return;
       breachBody.innerHTML = `
         <div class="breach-result error">
-          Couldn't check right now — probably a connection issue. Your password never left this device either way.
+          Couldn't check right now : probably a connection issue. Your password never left this device either way.
         </div>`;
     }
   }
@@ -729,7 +729,7 @@
   const debouncedHIBP = debounce((pw) => checkHIBP(pw), 550);
 
   // ==========================================================
-  // 6. "CALL THE BUILDER" — password mutation + repair animation
+  // 6. "CALL THE BUILDER" : password mutation + repair animation
   // ==========================================================
 
   const LEET_MAP = { a: '@', e: '3', i: '1', o: '0', s: '$', A: '@', E: '3', I: '1', O: '0', S: '$' };
@@ -748,7 +748,7 @@
    * four character classes are present, and pads length. The result is
    * then re-run through the SAME analyzePassword() scoring used for the
    * live checker, and more entropy is added in a loop until it actually
-   * scores as "strong" — so the suggestion is guaranteed to pass its own
+   * scores as "strong" : so the suggestion is guaranteed to pass its own
    * checker, not just look plausible.
    */
   function mutatePassword(original) {
@@ -931,7 +931,7 @@
           copyBtn.classList.remove('copied');
         }, 1800);
       } catch (e) {
-        copyBtn.textContent = 'Copy failed — select manually';
+        copyBtn.textContent = 'Copy failed : select manually';
       }
     };
   });
