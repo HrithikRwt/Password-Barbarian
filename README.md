@@ -1,4 +1,4 @@
-# Password Barbarian — Clash-of-Clans-Themed Password Strength Checker
+# Password Barbarian: Clash-of-Clans-Themed Password Strength Checker
 
 A single-page web app that turns password strength checking into a village raid.
 Type a password and watch a small original-art village react in real time: weak
@@ -11,7 +11,7 @@ without ever sending your actual password anywhere.
 
 There's also a "Call the Builder" feature that takes a weak/moderate password
 you typed and mutates it into a stronger variant (capitalization, leet-speak
-substitutions, an inserted symbol, an appended suffix) — a real transformation
+substitutions, an inserted symbol, an appended suffix) - a real transformation
 of what you typed, not a random generated password.
 
 All village and character art is original SVG/CSS — no Supercell assets, logos,
