@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Password Barbarian — Password Strength Checker</title>
+<meta name="description" content="Type a password. Watch a tiny village either survive or get flattened. Find out if it's leaked too." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=MedievalSharp&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="siege-sky" aria-hidden="true">
+  <div class="ember ember-1"></div>
+  <div class="ember ember-2"></div>
+  <div class="ember ember-3"></div>
+  <div class="ember ember-4"></div>
+  <div class="ember ember-5"></div>
+</div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <svg class="brand-crest" viewBox="0 0 48 48" aria-hidden="true">
+        <polygon points="24,3 43,14 43,34 24,45 5,34 5,14" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M24 12 L32 18 V28 L24 34 L16 28 V18 Z" fill="currentColor" opacity="0.85"/>
+      </svg>
+      <div class="brand-text">
+        <h1>Password Barbarian</h1>
+        <p class="brand-sub">Your password, but it's now defending a village</p>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="badge-dot"></span> Raid in Progress
+    </div>
+  </div>
+</header>
+
+<main class="stage">
+
+  <!-- LEFT: Village + Input -->
+  <section class="village-column">
+
+    <div class="brief-card">
+      <p><span class="brief-icon">🛡</span> Type a password and it turns into a barbarian guarding this village. Hackers attack the moment you type. Weak password = <strong>3 stars</strong> for the attackers. Okay password = <strong>1 star</strong>. Strong password = <strong>0</strong>, they retreat. Need backup? <strong>Call the Builder</strong> for a free instant upgrade to your password.</p>
+    </div>
+
+    <div class="village-frame">
+      <div class="outcome-banner" id="outcomeBanner" aria-live="polite"></div>
+
+      <svg id="villageSvg" class="village-svg" viewBox="0 0 640 420" role="img" aria-label="Animated village that reacts to password strength">
+        <defs>
+          <radialGradient id="groundGlow" cx="50%" cy="40%" r="70%">
+            <stop offset="0%" stop-color="#3a3020"/>
+            <stop offset="100%" stop-color="#1a140d"/>
+          </radialGradient>
+          <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#9a8563"/>
+            <stop offset="100%" stop-color="#6b573a"/>
+          </linearGradient>
+          <linearGradient id="thGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c9a24b"/>
+            <stop offset="100%" stop-color="#8a6a2c"/>
+          </linearGradient>
+          <linearGradient id="hutGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a9764f"/>
+            <stop offset="100%" stop-color="#754f30"/>
+          </linearGradient>
+          <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.45"/>
+          </filter>
+        </defs>
+
+        <rect x="0" y="0" width="640" height="420" fill="url(#groundGlow)"/>
+        <ellipse cx="320" cy="390" rx="300" ry="26" fill="#000" opacity="0.35"/>
+
+        <!-- shield dome for strong passwords -->
+        <g id="shieldDome" class="shield-dome" opacity="0">
+          <ellipse cx="320" cy="230" rx="270" ry="185" fill="#5ad1c9" opacity="0.08"/>
+          <ellipse cx="320" cy="230" rx="270" ry="185" fill="none" stroke="#5ad1c9" stroke-width="3" opacity="0.55"/>
+        </g>
+
+        <!-- perimeter wall -->
+        <g id="perimeterWall" class="building" filter="url(#softShadow)">
+          <g class="wall-seg" data-hp="1">
+            <rect x="70" y="300" width="500" height="26" rx="3" fill="url(#wallGrad)" stroke="#4a3b25" stroke-width="2"/>
+            <rect x="70" y="300" width="500" height="8" fill="#c4ad83" opacity="0.5"/>
+            <rect x="90" y="292" width="16" height="14" fill="#8a734f"/>
+            <rect x="140" y="292" width="16" height="14" fill="#8a734f"/>
+            <rect x="190" y="292" width="16" height="14" fill="#8a734f"/>
+            <rect x="440" y="292" width="16" height="14" fill="#8a734f"/>
+            <rect x="490" y="292" width="16" height="14" fill="#8a734f"/>
+            <rect x="540" y="292" width="16" height="14" fill="#8a734f"/>
+          </g>
+        </g>
+
+        <!-- huts -->
+        <g id="hut1" class="building" filter="url(#softShadow)">
+          <rect x="110" y="255" width="60" height="46" rx="3" fill="url(#hutGrad)" stroke="#4a3320" stroke-width="2"/>
+          <polygon points="105,255 140,222 175,255" fill="#5b3a22" stroke="#3a2313" stroke-width="2"/>
+          <rect x="130" y="272" width="18" height="29" fill="#3a2313"/>
+        </g>
+
+        <g id="hut2" class="building" filter="url(#softShadow)">
+          <rect x="440" y="258" width="56" height="43" rx="3" fill="url(#hutGrad)" stroke="#4a3320" stroke-width="2"/>
+          <polygon points="435,258 468,227 501,258" fill="#5b3a22" stroke="#3a2313" stroke-width="2"/>
+          <rect x="458" y="274" width="17" height="27" fill="#3a2313"/>
+        </g>
+
+        <g id="hut3" class="building" filter="url(#softShadow)">
+          <rect x="480" y="200" width="46" height="38" rx="3" fill="url(#hutGrad)" stroke="#4a3320" stroke-width="2"/>
+          <polygon points="476,200 503,174 530,200" fill="#5b3a22" stroke="#3a2313" stroke-width="2"/>
+        </g>
+
+        <g id="hut4" class="building" filter="url(#softShadow)">
+          <rect x="120" y="195" width="42" height="36" rx="3" fill="url(#hutGrad)" stroke="#4a3320" stroke-width="2"/>
+          <polygon points="116,195 141,171 166,195" fill="#5b3a22" stroke="#3a2313" stroke-width="2"/>
+        </g>
+
+        <!-- town hall (centerpiece) -->
+        <g id="townHall" class="building town-hall" filter="url(#softShadow)">
+          <rect x="255" y="195" width="130" height="90" rx="4" fill="url(#thGrad)" stroke="#5c4419" stroke-width="3"/>
+          <polygon points="248,195 320,140 392,195" fill="#8a5a2b" stroke="#5c3c17" stroke-width="3"/>
+          <polygon points="290,150 320,128 350,150" fill="#c9a24b" stroke="#5c3c17" stroke-width="2"/>
+          <rect x="300" y="150" width="6" height="18" fill="#5c3c17"/>
+          <circle cx="303" cy="146" r="5" fill="#e2b84f" stroke="#8a5a2b" stroke-width="1.5"/>
+          <rect x="303" y="235" width="34" height="50" fill="#3a2313"/>
+          <rect x="266" y="220" width="20" height="20" fill="#3a2313" opacity="0.8"/>
+          <rect x="354" y="220" width="20" height="20" fill="#3a2313" opacity="0.8"/>
+          <text x="320" y="330" text-anchor="middle" class="th-label" fill="#e7d6ab">TOWN HALL</text>
+        </g>
+
+        <!-- attacker (barbarian) -->
+        <g id="attacker" class="attacker" opacity="0">
+          <ellipse cx="0" cy="34" rx="14" ry="4" fill="#000" opacity="0.3"/>
+          <path d="M-9 8 L9 8 L6 30 L-6 30 Z" fill="#8b5a2b" stroke="#3a2313" stroke-width="1.5"/>
+          <circle cx="0" cy="-2" r="9" fill="#d9a066" stroke="#3a2313" stroke-width="1.5"/>
+          <path d="M-9 -6 Q0 -16 9 -6 L9 -2 Q0 -8 -9 -2 Z" fill="#b23a2f"/>
+          <line x1="-9" y1="10" x2="-20" y2="-2" stroke="#3a2313" stroke-width="3" stroke-linecap="round" class="attacker-arm"/>
+          <line x1="9" y1="10" x2="18" y2="16" stroke="#d9a066" stroke-width="3" stroke-linecap="round"/>
+          <polygon points="-20,-2 -26,-14 -21,-16 -14,-5" fill="#9aa5ab" stroke="#3a2313" stroke-width="1"/>
+        </g>
+
+        <!-- builder (repair) -->
+        <g id="builder" class="builder-char" opacity="0">
+          <ellipse cx="0" cy="34" rx="14" ry="4" fill="#000" opacity="0.3"/>
+          <path d="M-9 8 L9 8 L6 30 L-6 30 Z" fill="#3f6b4a" stroke="#20351f" stroke-width="1.5"/>
+          <circle cx="0" cy="-2" r="9" fill="#d9a066" stroke="#3a2313" stroke-width="1.5"/>
+          <path d="M-10 -8 Q0 -14 10 -8 L10 -4 L-10 -4 Z" fill="#c9a24b"/>
+          <line x1="9" y1="10" x2="20" y2="-4" stroke="#d9a066" stroke-width="3" stroke-linecap="round" class="builder-arm"/>
+          <rect x="17" y="-10" width="4" height="16" fill="#8a5a2b" transform="rotate(25 19 -2)"/>
+        </g>
+
+        <!-- impact burst -->
+        <g id="impactBurst" class="impact-burst" opacity="0">
+          <polygon points="0,-18 5,-5 18,0 5,5 0,18 -5,5 -18,0 -5,-5" fill="#ffcf5c"/>
+        </g>
+
+      </svg>
+
+      <div class="star-row" id="starRow" aria-live="polite">
+        <span class="star" data-i="1">★</span>
+        <span class="star" data-i="2">★</span>
+        <span class="star" data-i="3">★</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- RIGHT: Password input + Builder reinforcement + Intel panels -->
+  <aside class="intel-column">
+
+    <div class="input-card">
+      <label for="pwInput" class="input-label">Alright Chief, let's see what you've got</label>
+      <div class="pw-input-wrap">
+        <input type="text" id="pwInput" class="pw-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type a password and watch the raid unfold..." />
+        <button type="button" id="toggleVisibility" class="visibility-btn" aria-label="Show password" title="Show/hide password">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>
+        </button>
+      </div>
+
+      <div class="strength-meter-wrap">
+        <div class="strength-meter">
+          <div class="strength-fill" id="strengthFill"></div>
+          <div class="strength-ticks" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <span class="strength-label" id="strengthLabel">Type something, Chief</span>
+      </div>
+
+      <button type="button" id="builderBtn" class="builder-btn" disabled>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+        Call the Builder
+      </button>
+
+      <div class="builder-suggestion-panel" id="suggestionPanel" hidden>
+        <div class="panel-head">
+          <span class="panel-eyebrow">Builder's Reinforcement</span>
+          <span class="panel-icon">🛠</span>
+        </div>
+        <div class="suggestion-value" id="suggestionValue"></div>
+        <button type="button" id="copyBtn" class="copy-btn">Copy to Clipboard</button>
+        <p class="suggestion-hint">Same password, hit the gym. Still yours, just harder to push over.</p>
+      </div>
+    </div>
+
+    <div class="panel eta-panel">
+      <div class="panel-head">
+        <span class="panel-eyebrow">Enemy ETA</span>
+        <span class="panel-icon">⏱</span>
+      </div>
+      <div class="eta-value" id="etaValue">—</div>
+      <div class="eta-sub" id="etaSub">Start typing to summon the enemy war council.</div>
+    </div>
+
+    <div class="panel scout-panel">
+      <div class="panel-head">
+        <span class="panel-eyebrow">Scout Report</span>
+        <span class="panel-icon">🔭</span>
+      </div>
+      <ul class="scout-list" id="scoutList">
+        <li class="scout-empty">Nothing typed yet. Scouts are just standing around.</li>
+      </ul>
+    </div>
+
+    <div class="panel breach-panel">
+      <div class="panel-head">
+        <span class="panel-eyebrow">Enemy Intelligence Network</span>
+        <span class="panel-icon">📯</span>
+      </div>
+      <div class="breach-body" id="breachBody">
+        <p class="breach-idle">Type a password and we'll check if it's already out there (powered by Have I Been Pwned).</p>
+      </div>
+    </div>
+
+  </aside>
+
+</main>
+
+<footer class="app-footer">
+  <p>Your actual password never leaves your device. We only send a tiny scrambled fingerprint (5 characters of a hash) to check it against known leaks. Details in the README.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
